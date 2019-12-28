@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo1.dao.ProductMapper" >
+
+
+
+  <!--更新库存量-->
+  <update id="updateTotal">
+    UPDATE product a
+    SET a.total = a.total - 1
+    WHERE a.product_no = #{productNo}
+
+    AND a.total > 0
+  </update>
+
+  <!--根据产品号查询-->
+  <select id="selectByProductNo" resultType="com.example.demo1.entity.Product">
+    SELECT <include refid="Base_Column_List"/>
+    FROM product WHERE product_no=#{productNo}
+
+    AND total>0
+  </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

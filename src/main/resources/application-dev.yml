@@ -1,0 +1,27 @@
+server:
+  port: 8760
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: localhostss
+  freemarker:
+    prefer-file-system-access: false   #解决无法进入访问页面
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  aliases-package: com.example.demo1.entity
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false #服务器不用注册到其他服务器
+    fetch-registry: false #服务器不用去服务器抓取注册信息
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

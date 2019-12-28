@@ -1,0 +1,169 @@
+server:
+  port: 8761
+
+spring:
+  #profiles:
+    #active: dev
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: localhostss
+  freemarker:
+    prefer-file-system-access: false   #解决无法进入访问页面
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 300
+      max-idle: -1
+      max-wait: -1
+      min-idle: 0
+    timeout: 0
+    password: 123456
+  mail:
+    host: smtp.126.com
+    username: alibabachina@126.com
+    password: 8422190jia
+    port: 25
+    protocol: smtp
+    default-encoding: utf-8
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      concurrency: 10
+      max-concurrency: 20
+      prefetch: 5
+      retry:
+        enabled: true #是否开启消费者重试（为false时关闭消费者重试，这时消费端代码异常会一直重复收到消息）
+        max-attempts: 5 #最大重试次数
+        initial-interval: 2000 #重试间隔时间（单位毫秒）
+        max-interval: 1000 #重试最大时间间隔（单位毫秒）
+        multiplier: 5 #应用于前一重试间隔的乘法器
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  aliases-package: com.example.demo1.entity
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false #服务器不用注册到其他服务器
+    fetch-registry: false #服务器不用去服务器抓取注册信息
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+log:
+  user:
+    queue:
+      name: local.log.user.queue
+      name1: APPMSG_OUTPLAT_CMISMSG_QUEUE_1
+      name2: APPMSG_OUTPLAT_CMISMSG_QUEUE_2
+    exchange:
+      name: local.log.user.exchange
+    routing:
+      key:
+        name1: local.log.user.key1
+        name2: local.log.user.key2
+simple:
+  mq:
+    queue:
+      name: local.simple.mq.queue
+    exchange:
+      name: local.simple.mq.exchange
+    routing:
+      key:
+        name: local.simple.mq.routing.key
+  dead:
+    queue:
+      name: local.simple.dead.queue
+    exchange:
+      name: local.simple.dead.exchange
+    routing:
+      key:
+        name: local.simple.dead.routing.key
+  produce:
+    exchange:
+      name: local.simple.produce.exchange
+    routing:
+      key:
+        name: local.simple.produce.routing.key
+  real:
+    queue:
+      name: local.simple.dead.real.queue
+basic:
+  info:
+    mq:
+      exchange:
+        name: local:basic:info:mq:exchange
+      routing:
+        key:
+          name: local:basic:info:mq:routing:key
+      queue:
+        name: local:basic:info:mq:queue
+product:
+  robbing:
+    mq:
+      exchange:
+        name: local:product:robbing:mq:exchange
+      routing:
+        key:
+          name: local:product:robbing:mq:routing:key
+      queue:
+        name: local:product:robbing:mq:queue
+user:
+  order:
+    queue:
+      name: local.user.order.queue
+    exchange:
+      name: local.user.order.exchange
+    routing:
+      key:
+        name: local.user.order.routing.key
+    dead:
+      queue:
+        name: local.user.order.dead.queue
+      exchange:
+        name: local.user.order.dead.exchange
+      routing:
+        key:
+          name: local.user.order.dead.routing.key
+      produce:
+        exchange:
+          name: local.user.order.dead.produce.exchange
+        routing:
+          key:
+            name: local.user.order.dead.produce.routing.key
+      real:
+        queue:
+          name: local.user.order.dead.real.queue
+dynamic:
+  dead:
+    queue:
+      name: local.dynamic.dead.queue
+    exchange:
+      name: local.dynamic.dead.exchange
+    routing:
+      key:
+        name: local.dynamic.dead.routing.key
+    produce:
+      exchange:
+        name: local.dynamic.dead.produce.exchange
+      routing:
+        key:
+          name: local.dynamic.dead.produce.routing.key
+    real:
+      queue:
+        name: local.dynamic.dead.real.queue
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: service-ribbon
+    api-b:
+      path: /api-b/**
+      serviceId: hello-service1
