@@ -17,7 +17,7 @@ public class CommonMqListener {
 
 
     /**
-     * 监听消费用户日志3
+     * 监听消费用户日志
      *
      * @param mess
      */
